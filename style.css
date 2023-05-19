@@ -1,0 +1,183 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Impede a soma das bordas nos elementos*/
+}
+
+:root {
+  /*Seleciona a raiz do projeto, o elemento principal*/
+  font-size: 16px; /*Define que o tamanho da fonte é 16px no projeto inteiro*/
+}
+
+::-webkit-scrollbar {
+  /*Seleciona a scrollbar do navegador*/
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  /*Selecioan a trilha do scrollbar*/
+  background-color: #2c2c31;
+}
+
+::-webkit-scrollbar-thumb {
+  /*Seleciona a barrinha da scrollbar*/
+  background-color: #9e9ea0;
+}
+
+@keyframes entering {
+  /*Cria uma animação com o nome entering*/
+
+  /* Uma maneira de executar é com % desejadas
+  0% { background-color: red; }
+  30% { background-color: green; }
+  78% { opacity: 0; }
+  100% { opacity: 1; } */
+
+  from {
+    /*Inicia nesse estado*/
+    opacity: 0;
+    transform: translateY(-200px); /*Posiciona o elemtno 200 px acima da tela*/
+  }
+  to {
+    /*Finaliza nesse estado*/
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body {
+  background-color: #121215;
+  color: #eaeaee;
+  font-family: "Roboto", sans-serif; /*Caso Roboto não esteja disponível, ele usa o sans-serif*/
+
+  display: grid; /*Torna o body uma grid (linhas e colunas)*/
+  grid-template-areas: "profile timeline"; /*Cria 2 áreas na grid (profile e timeline)*/
+  grid-template-columns: 1fr 1fr; /*Torna as áreas com tamanho flexível meio a meio*/
+  grid-template-rows: 100vh; /*Torna a linha do grid 100% da tela*/
+}
+
+nav {
+  padding: 64px; /*Espaçamento*/
+  grid-area: timeline;
+
+  overflow-y: scroll; /*Permite o scroll da nav, que é o elemento que ultrapassa o tamanho da tela, deixando o elemento aside fixo, sem scroll*/
+  animation: entering 0.7s ease-in-out; /*Executa a animação*/
+}
+
+.memory {
+  display: flex; /*Torna flexível para adicionar espaçamento entre os atributos*/
+  flex-direction: column; /*Torna a direção dos atributos em coluna, os deixa um embaixo do outro*/
+  gap: 16px;
+
+  color: #eaeaee;
+  text-decoration: none; /*Retira os _ do texto de link*/
+
+  margin-bottom: 64px;
+}
+
+.memory small {
+  color: #bebebf;
+  font-size: 0.75rem; /*Define o tamanho da fonte equivalente a 75% do font-size do root*/
+}
+
+.memory h1 {
+  font-size: 2rem;
+}
+
+.memory img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover; /*Deixa a imagem como uma capa*/
+  border-radius: 8px;
+
+  transition: transform 0.3s ease-in-out; /*Adiciona um efeito de transição para o evento hover da img*/
+}
+
+.memory:hover img {
+  /*Evento acionado ao passar o mouse por cima da imagem dentro da classe memory*/
+  transform: scale(1.1); /*Aumenta 10% da imagem*/
+}
+
+.memory div {
+  /*Div utilizada para manter a imagem no mesmo espaço ao aplicar o zoom*/
+  width: 100%;
+  height: 280px;
+  overflow: hidden; /*Quando o conteúdo não couber no width e height, ele irá esconder o que exceder*/
+  border-radius: 8px;
+}
+
+.memory p {
+  font-size: 1.2rem;
+  color: #bebebf;
+  line-height: 28px; /*Espaçamento entre linhas*/
+}
+
+aside {
+  grid-area: profile;
+
+  display: flex; /*Os elementos dentro de aside, serão posicionados utilizando flexbox*/
+  flex-direction: column; /*Direção coluna - um embaixo do outro*/
+  align-items: center;
+  justify-content: center; /*Centraliza na vertical*/
+  gap: 20px; /*Espaçamento dos elementos*/
+
+  border-right: 1px solid;
+  border-image: linear-gradient(#727275, #2c2c31) 1;
+
+  background-image: url(./assets/background.svg);
+  background-position: top right; /*Posiciona a img em cima e na direita*/
+  background-repeat: no-repeat; /*Desativa a duplicidade da img para completar o espaço*/
+  background-size: auto 100%;
+}
+
+aside * {
+  /*Seleciona todos os elementos dentro do aside*/
+  animation: entering 0.7s ease-in-out;
+}
+
+aside img:nth-child(2) {
+  /*Seleciona o segundo elemento img dentro de aside*/
+  width: 160px;
+  height: 160px;
+  border-radius: 50%; /*Arredondamento das bordas*/
+
+  border: 4px solid transparent;
+  background: linear-gradient(#d39e33, #ed5636, #633bbc) padding-box,
+    linear-gradient(260deg, #d39e33, #ed5636, #633bbc) border-box;
+}
+
+aside p {
+  font-size: 2rem;
+  text-align: center;
+}
+
+aside span {
+  font-size: 0.75rem;
+  color: #9e9ea0;
+}
+
+@media (max-width: 768px) {
+  /*Quando o site estiver em uma largura de até 768px, a estilização do site será o que estiver dentro desse bloco*/
+
+  :root {
+    font-size: 14px; /*Define um novo tamanho de fonte para dispositivos com a tela menor*/
+  }
+
+  body {
+    grid-template-columns: 1fr; /*Define apenas 1 coluna*/
+    grid-template-rows: 0.2fr 0.8fr; /*Define 20% do tamanho total para a primeira linha e 80% para a segunda linha*/
+    grid-template-areas:
+      "profile" /*Primeira linha*/
+      "timeline"; /*Segunda linha*/
+  }
+
+  aside {
+    border-right: none; /*Remove a linha da borda*/
+    padding: 32px 12px;
+  }
+
+  nav {
+    overflow-y: visible; /*Faz com que a nav e o aside scrollem juntos, pois tirou a sobreposição do nav*/
+    padding: 22px;
+  }
+}
